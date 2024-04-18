@@ -33,11 +33,14 @@ void Game::Update( float elapsedSec )
 	//{
 	//	std::cout << "Left and up arrow keys are down\n";
 	//}
+	guard->Update();
+	guard->Move(Vector2f(2.f, 4.f));
 }
 
 void Game::Draw( ) const
 {
 	ClearBackground( );
+	guard->Draw();
 }
 
 void Game::ProcessKeyDownEvent( const SDL_KeyboardEvent & e )
