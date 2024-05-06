@@ -1,8 +1,11 @@
 #include "pch.h"
 #include "Game.h"
-
-Game::Game( const Window& window ) 
-	:BaseGame{ window }
+#include "Guard.h"
+#include "KeyboardManager.h"
+Game::Game(const Window& window)
+	:BaseGame{ window },
+	g_Guard{ new Guard{Point2f{300,300}}},
+	g_Level{ new Level{} }
 {
 	Initialize();
 }
@@ -33,37 +36,34 @@ void Game::Update( float elapsedSec )
 	//{
 	//	std::cout << "Left and up arrow keys are down\n";
 	//}
-	guard->Update();
-	guard->Move(Vector2f(2.f, 4.f));
+	++angle;
+	KeyboardManager::Update(elapsedSec);
+	g_Guard->ChangeDirection(angle);
+	g_Guard->Update(elapsedSec);
 }
 
 void Game::Draw( ) const
 {
 	ClearBackground( );
-	guard->Draw();
+	g_Level->Draw();
+	g_Guard->Draw();
+	//glPushMatrix();
+	//{
+	//	glTranslatef(300, 300, 0.f);
+	//	glRotatef(angle, 0.f, 0.f, 1.f);
+	//	DrawPolygon(g_Cone);
+	//}
+	//glPopMatrix();
 }
 
 void Game::ProcessKeyDownEvent( const SDL_KeyboardEvent & e )
 {
-	//std::cout << "KEYDOWN event: " << e.keysym.sym << std::endl;
+	KeyboardManager::ProcessKeyDownEvent(e.keysym.scancode);
 }
 
 void Game::ProcessKeyUpEvent( const SDL_KeyboardEvent& e )
 {
-	//std::cout << "KEYUP event: " << e.keysym.sym << std::endl;
-	//switch ( e.keysym.sym )
-	//{
-	//case SDLK_LEFT:
-	//	//std::cout << "Left arrow key released\n";
-	//	break;
-	//case SDLK_RIGHT:
-	//	//std::cout << "`Right arrow key released\n";
-	//	break;
-	//case SDLK_1:
-	//case SDLK_KP_1:
-	//	//std::cout << "Key 1 released\n";
-	//	break;
-	//}
+	KeyboardManager::ProcessKeyUpEvent(e.keysym.scancode);
 }
 
 void Game::ProcessMouseMotionEvent( const SDL_MouseMotionEvent& e )

@@ -1,17 +1,17 @@
 #pragma once
 #include "Character.h"
+#include "VisionCone.h"
 #include <vector>
 
 class Guard : public Character
 {
 public:
 	Guard(Point2f startpos);
-	void Update();
-	virtual void Move(Vector2f vector) override;
-	virtual void Draw() override;
+	void Update(float elapsedSec);
+	virtual void Draw() const override;
+	virtual void ChangeDirection(float angle);
 
 private:
-	Vector2f m_FacingDirection;
-	std::vector<Point2f> m_visionCone;
+	VisionCone* m_VisionCone;
 };
 

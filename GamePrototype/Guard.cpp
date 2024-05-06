@@ -6,32 +6,30 @@ using namespace utils;
 
 Guard::Guard(Point2f startpos) :
 	Character(startpos, Color4f(0.f, 0.f, 1.f, 1.f)),
-	m_visionCone{}
+	m_VisionCone{ new VisionCone{0.f, 100} }
 {
 
 }
 
-void Guard::Update()
+void Guard::Update(float elapsedSec)
 {
-	float angle = atan2(m_FacingDirection.y, m_FacingDirection.x);
-	m_visionCone[0] = Point2f{ m_FacingDirection.x - 50 * cos(angle), m_FacingDirection.y - 20 * sin(angle) };
-	m_visionCone[1] = Point2f{ m_FacingDirection.x + 50 * cos(angle), m_FacingDirection.y + 20 * sin(angle) };
+	Character::Update(elapsedSec);
 }
 
-void Guard::Move(Vector2f vector)
+void Guard::Draw() const
 {
-	m_FacingDirection = vector;
-	m_Position += vector;
-}
 
-void Guard::Draw()
-{
 	glPushMatrix();
 	{
 		glTranslatef(m_Position.x, m_Position.y, 0.f);
-		SetColor(Color4f(1.f, 0.f, 1.f, 1.f));
-		DrawPolygon(m_visionCone);
+		glRotatef(m_VisionCone->m_FacingDirection, 0.f, 0.f, 1.f);
+		m_VisionCone->Draw();
 	}
 	glPopMatrix();
 	Character::Draw();
+}
+
+void Guard::ChangeDirection(float angle)
+{
+	m_VisionCone->ChangeDirection(angle);
 }

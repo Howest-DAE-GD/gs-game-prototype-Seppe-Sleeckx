@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseGame.h"
 #include "Guard.h"
+#include "Level.h"
 class Game : public BaseGame
 {
 public:
@@ -23,7 +24,9 @@ public:
 	void ProcessMouseUpEvent( const SDL_MouseButtonEvent& e ) override;
 
 private:
-	Guard* guard = new Guard(Point2f{ 200,200 });
+	Guard* g_Guard;
+	Level* g_Level;
+	float angle{ 0 };
 	// FUNCTIONS
 	void Initialize();
 	void Cleanup( );

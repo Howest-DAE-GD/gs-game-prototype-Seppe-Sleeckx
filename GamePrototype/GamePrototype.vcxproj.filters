@@ -19,6 +19,18 @@
     <Filter Include="Tools">
       <UniqueIdentifier>{900e3a64-71cc-4fea-bd07-15e59b1a5255}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjects\Guard">
+      <UniqueIdentifier>{fe7e6e4a-3f74-44ac-8b7c-1f92cecf2476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\VisionCone">
+      <UniqueIdentifier>{b2a97323-357a-4efe-a766-d4fc6189a760}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Level">
+      <UniqueIdentifier>{f91b3794-45b4-4ddc-bdd5-4cd8d1712aa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\KeyboardManager">
+      <UniqueIdentifier>{88cdcc72-868e-421e-b540-3d2d7787754c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -37,7 +49,10 @@
       <Filter>GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Guard.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>GameObjects\Guard</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardManager.cpp">
+      <Filter>Tools\KeyboardManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -54,7 +69,19 @@
       <Filter>GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Guard.h">
-      <Filter>Header Files</Filter>
+      <Filter>GameObjects\Guard</Filter>
+    </ClInclude>
+    <ClInclude Include="VisionCone.h">
+      <Filter>GameObjects\VisionCone</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>GameObjects\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardKey.h">
+      <Filter>Tools\KeyboardManager</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardManager.h">
+      <Filter>Tools\KeyboardManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
