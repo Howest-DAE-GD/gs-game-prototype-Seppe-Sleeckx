@@ -3,14 +3,17 @@
 #include "VisionCone.h"
 #include <vector>
 
-class Guard : public Character
+class Guard final: public Character
 {
 public:
-	Guard(Point2f startpos);
-	void Update(float elapsedSec);
+	Guard(Point2f startpos, Color4f color);
+	~Guard();
+	virtual bool Update(float elapsedSec, const std::vector<std::vector<Point2f>>& collisionVertices) override;
 	virtual void Draw() const override;
-	virtual void ChangeDirection(float angle);
+	virtual void ChangeDirection(Vector2f newDirection) override;
+	bool SpotTarget(Character& target);
 
+	float cooldownTimer{};
 private:
 	VisionCone* m_VisionCone;
 };

@@ -28,8 +28,35 @@
     <Filter Include="GameObjects\Level">
       <UniqueIdentifier>{f91b3794-45b4-4ddc-bdd5-4cd8d1712aa0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Tools\KeyboardManager">
-      <UniqueIdentifier>{88cdcc72-868e-421e-b540-3d2d7787754c}</UniqueIdentifier>
+    <Filter Include="GameObjects\NPC">
+      <UniqueIdentifier>{d5e6255e-8cb5-4ea2-9510-5c378c0dbc62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\NPC\GuardManager">
+      <UniqueIdentifier>{8869d2e1-353d-4e02-9228-f4f7de0d6deb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\InputManager">
+      <UniqueIdentifier>{0a14b3ce-368e-45e6-a562-75aab2b1c656}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\InputManager\KeyboardManager">
+      <UniqueIdentifier>{e52f0666-239b-4892-a733-6d3c7f7c2b8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\InputManager\MouseManager">
+      <UniqueIdentifier>{23eb60c4-d80c-4b59-8d50-25d61464e244}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\NPC\NPCManager">
+      <UniqueIdentifier>{c0041ce8-9f54-4a7d-9ed0-5946b321ab82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\Camera">
+      <UniqueIdentifier>{c4236e6b-1cf2-44b4-bb5b-d1399ed127f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\PLayer">
+      <UniqueIdentifier>{2abf3b32-7a15-4d36-9b2e-17c548437d14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Bullet">
+      <UniqueIdentifier>{6b13bcbb-2fa9-4fb6-ae3a-c027869f38df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Orb">
+      <UniqueIdentifier>{c885df87-942d-422e-a5a7-c78d4e13f55c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -51,8 +78,32 @@
     <ClCompile Include="Guard.cpp">
       <Filter>GameObjects\Guard</Filter>
     </ClCompile>
+    <ClCompile Include="GuardManager.cpp">
+      <Filter>GameObjects\NPC\GuardManager</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Tools\InputManager</Filter>
+    </ClCompile>
     <ClCompile Include="KeyboardManager.cpp">
-      <Filter>Tools\KeyboardManager</Filter>
+      <Filter>Tools\InputManager\KeyboardManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseManager.cpp">
+      <Filter>Tools\InputManager\MouseManager</Filter>
+    </ClCompile>
+    <ClCompile Include="NPCManager.cpp">
+      <Filter>GameObjects\NPC\NPCManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Tools\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerManager.cpp">
+      <Filter>GameObjects\PLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>GameObjects\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Orb.cpp">
+      <Filter>GameObjects\Orb</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,11 +128,38 @@
     <ClInclude Include="Level.h">
       <Filter>GameObjects\Level</Filter>
     </ClInclude>
+    <ClInclude Include="GuardManager.h">
+      <Filter>GameObjects\NPC\GuardManager</Filter>
+    </ClInclude>
     <ClInclude Include="KeyboardKey.h">
-      <Filter>Tools\KeyboardManager</Filter>
+      <Filter>Tools\InputManager\KeyboardManager</Filter>
     </ClInclude>
     <ClInclude Include="KeyboardManager.h">
-      <Filter>Tools\KeyboardManager</Filter>
+      <Filter>Tools\InputManager\KeyboardManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseManager.h">
+      <Filter>Tools\InputManager\MouseManager</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Tools\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseButton.h">
+      <Filter>Tools\InputManager\MouseManager</Filter>
+    </ClInclude>
+    <ClInclude Include="NPCManager.h">
+      <Filter>GameObjects\NPC\NPCManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Tools\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerManager.h">
+      <Filter>GameObjects\PLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>GameObjects\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Orb.h">
+      <Filter>GameObjects\Orb</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

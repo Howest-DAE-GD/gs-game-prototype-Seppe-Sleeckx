@@ -576,7 +576,7 @@ bool utils::Raycast( const Point2f* vertices, const size_t nrVertices, const Poi
 					HitInfo linesHitInfo{};
 					linesHitInfo.lambda = lambda1;
 					linesHitInfo.intersectPoint = Point2f{ rayP1.x + ( ( rayP2.x - rayP1.x ) * lambda1 ), rayP1.y + ( ( rayP2.y - rayP1.y ) * lambda1 ) };
-					linesHitInfo.normal = Vector2f{ q2 - q1 }.Orthogonal( ).Normalized( );
+					linesHitInfo.normal = Vector2f{ q2 - q1 }.Orthogonal().Normalized( );
 					hits.push_back(linesHitInfo);
 				}
 			}

@@ -147,22 +147,39 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Guard.cpp" />
+    <ClCompile Include="GuardManager.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="KeyboardManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MouseManager.cpp" />
+    <ClCompile Include="NPCManager.cpp" />
+    <ClCompile Include="Orb.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="PlayerManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Guard.h" />
+    <ClInclude Include="GuardManager.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="KeyboardKey.h" />
     <ClInclude Include="KeyboardManager.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="MouseButton.h" />
+    <ClInclude Include="MouseManager.h" />
+    <ClInclude Include="NPCManager.h" />
+    <ClInclude Include="Orb.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="VisionCone.h" />
   </ItemGroup>

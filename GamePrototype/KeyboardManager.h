@@ -1,22 +1,25 @@
 #pragma once
-#include <vector>
 #include "KeyboardKey.h"
-static class KeyboardManager
+#include <vector>
+
+class KeyboardManager final
 {
-	//verander in een namespace met static variables wnr tijd over
 public:
-	static void Update(float elapsedSec);
-	static void ProcessKeyDownEvent(SDL_Scancode scanCode);
-	static void ProcessKeyUpEvent(SDL_Scancode scanCode);
-	static bool IsKeyPressed(SDL_Scancode scanCode);
-	static bool IsKeyHeld(SDL_Scancode scanCode);
-	static bool IsKeyActive(SDL_Scancode scanCode);
-	static std::vector<SDL_Scancode>& GetHeldKeys();
-	static std::vector<SDL_Scancode>& GetPressedKeys();
-	static std::vector<SDL_Scancode>& GetActiveKeys();
+	void Update(const float elapsedSec);
+	void ProcessKeyDownEvent(const SDL_Scancode scancode);
+	void ProcesskeyUpEvent(const SDL_Scancode scancode);
+
+	bool IsKeyHeld(const SDL_Scancode scancode);
+	bool IsKeyActive(const SDL_Scancode scancode);
+	bool IsKeyPressed(const SDL_Scancode scancode);
+
 private:
-	static const float PressedThreshold;
-	static std::vector<KeyboardKey> m_PressedKeys;
-	static std::vector<SDL_Scancode> m_HeldKeys;
+	bool IsKeyInQueue(const SDL_Scancode scancode);
+
+	//Keyboard
+	const float m_PressedKeyThreshold{ 0.2f };
+	std::vector<KeyboardKey> m_KeyQueue{};
+	std::vector<SDL_Scancode> m_HeldKeys{};
+	std::vector<SDL_Scancode> m_PressedKeys{};
 };
 

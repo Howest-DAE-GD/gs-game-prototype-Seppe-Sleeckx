@@ -1,113 +1,140 @@
 #include "pch.h"
 #include "Game.h"
 #include "Guard.h"
-#include "KeyboardManager.h"
+#include "InputManager.h"
+
 Game::Game(const Window& window)
 	:BaseGame{ window },
-	g_Guard{ new Guard{Point2f{300,300}}},
-	g_Level{ new Level{} }
+	g_Level{ new Level{} },
+	g_Camera{ new Camera{GetViewPort().width, GetViewPort().height, 1.f} },
+	g_PlayerOne{ new PlayerManager{new InputManager{}, new Character{ Point2f{1000,500}, Color4f{1.f,1.f,0.f,1.f} } } },
+	g_GuardManager{ new GuardManager{ 10, g_PlayerOne->GetCharacterPtr()} },
+	g_ScoreText{ new Texture("0", "Font.ttf", 40, Color4f{1.f,0.5f,0.f,1.f}) }
 {
+	for (size_t i = 0; i < 10; i++)
+	{
+		g_Orbs.push_back(new Orb());
+	}
+	g_Orbs.push_back(new Orb(Point2f{1000,500}));
 	Initialize();
 }
 
-Game::~Game( )
+Game::~Game()
 {
-	Cleanup( );
+	Cleanup();
 }
 
-void Game::Initialize( )
+void Game::Initialize()
 {
+
+}
+
+void Game::Cleanup()
+{
+	delete g_PlayerOne;
+	delete g_Level;
+	delete g_GuardManager;
+	delete g_Camera;
+	delete g_GameOverImage;
+	delete g_ScoreText;
+}
+
+void Game::Update(float elapsedSec)
+{
+	g_GameOver = g_GuardManager->Update(elapsedSec, g_Level->m_Vertices);
+	std::vector<Character*> enemies{ g_GuardManager->GetGuardPtrs() };
+	g_PlayerOne->Update(elapsedSec, enemies, g_Level->m_Vertices, g_Camera->GetPosition(), const_cast<Rectf&>(GetViewPort()));
+	if (g_GameOver && g_GameOverImage==nullptr)
+	{
+		g_GameOverImage = new Texture{ "funny_cat_meme.jpg" };
+		g_GameOverImageScale = GetViewPort().width/ g_GameOverImage->GetWidth();
+	}
+	g_AccumulatedTimeInSeconds += elapsedSec;
+	if (g_AccumulatedTimeInSeconds > 10.f)
+	{
+		g_GuardManager->AddGuards(2);
+		g_AccumulatedTimeInSeconds = 0.f;
+	}
+
+	for (size_t i = 0; i < g_Orbs.size(); i++)
+	{
+		if (g_Orbs[i]->CheckHit(g_PlayerOne->GetCharacterPtr()))
+		{
+			++g_Score;
+			delete g_ScoreText;
+			g_ScoreText = new Texture(std::to_string(g_Score), "Font.ttf", 40, Color4f{ 1.f,0.5f,0.f,1.f });
+			g_Orbs[i]->SetNewPosition();
+		}
+	}
+}
+
+void Game::Draw() const
+{
+	ClearBackground();
+	g_Camera->Aim(GetViewPort().width, g_PlayerOne->GetPosition());
+	{
+
+
+		g_Level->Draw();
+		g_PlayerOne->Draw();
+		for (size_t i = 0; i < g_GuardManager->AmountOfGuards(); i++)
+		{
+			if (g_Camera->IsPointInCamera(g_GuardManager->GetGuardPosition(i)))
+			{
+				g_GuardManager->Draw(i);
+			}
+		}
+		for (size_t i = 0; i < g_Orbs.size(); i++)
+		{
+			g_Orbs[i]->Draw();
+		}
+	}
+	g_Camera->Reset();
+	if (g_GameOverImage!= nullptr)
+	{
+		glPushMatrix();
+		{
+			glScalef(g_GameOverImageScale, g_GameOverImageScale, 1.f);
+			g_GameOverImage->Draw();
+		}
+		glPopMatrix();
+	}
+	
+	Point2f textPos{
+		0.f,
+		GetViewPort().height - g_ScoreText->GetHeight()
+	};
+	g_ScoreText->Draw(textPos);
 	
 }
 
-void Game::Cleanup( )
+void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)
 {
+	g_PlayerOne->ProcessKeyDownEvent(e.keysym.scancode);
 }
 
-void Game::Update( float elapsedSec )
+void Game::ProcessKeyUpEvent(const SDL_KeyboardEvent& e)
 {
-	// Check keyboard state
-	//const Uint8 *pStates = SDL_GetKeyboardState( nullptr );
-	//if ( pStates[SDL_SCANCODE_RIGHT] )
-	//{
-	//	std::cout << "Right arrow key is down\n";
-	//}
-	//if ( pStates[SDL_SCANCODE_LEFT] && pStates[SDL_SCANCODE_UP])
-	//{
-	//	std::cout << "Left and up arrow keys are down\n";
-	//}
-	++angle;
-	KeyboardManager::Update(elapsedSec);
-	g_Guard->ChangeDirection(angle);
-	g_Guard->Update(elapsedSec);
+	g_PlayerOne->ProcessKeyUpEvent(e.keysym.scancode);
 }
 
-void Game::Draw( ) const
+void Game::ProcessMouseMotionEvent(const SDL_MouseMotionEvent& e)
 {
-	ClearBackground( );
-	g_Level->Draw();
-	g_Guard->Draw();
-	//glPushMatrix();
-	//{
-	//	glTranslatef(300, 300, 0.f);
-	//	glRotatef(angle, 0.f, 0.f, 1.f);
-	//	DrawPolygon(g_Cone);
-	//}
-	//glPopMatrix();
+	g_PlayerOne->ProcessMouseMotionEvent(e);
 }
 
-void Game::ProcessKeyDownEvent( const SDL_KeyboardEvent & e )
+void Game::ProcessMouseDownEvent(const SDL_MouseButtonEvent& e)
 {
-	KeyboardManager::ProcessKeyDownEvent(e.keysym.scancode);
+	g_PlayerOne->ProcessMouseDownEvent(e.button);
 }
 
-void Game::ProcessKeyUpEvent( const SDL_KeyboardEvent& e )
+void Game::ProcessMouseUpEvent(const SDL_MouseButtonEvent& e)
 {
-	KeyboardManager::ProcessKeyUpEvent(e.keysym.scancode);
+	g_PlayerOne->ProcessMouseUpEvent(e.button);
 }
 
-void Game::ProcessMouseMotionEvent( const SDL_MouseMotionEvent& e )
+void Game::ClearBackground() const
 {
-	//std::cout << "MOUSEMOTION event: " << e.x << ", " << e.y << std::endl;
-}
-
-void Game::ProcessMouseDownEvent( const SDL_MouseButtonEvent& e )
-{
-	//std::cout << "MOUSEBUTTONDOWN event: ";
-	//switch ( e.button )
-	//{
-	//case SDL_BUTTON_LEFT:
-	//	std::cout << " left button " << std::endl;
-	//	break;
-	//case SDL_BUTTON_RIGHT:
-	//	std::cout << " right button " << std::endl;
-	//	break;
-	//case SDL_BUTTON_MIDDLE:
-	//	std::cout << " middle button " << std::endl;
-	//	break;
-	//}
-	
-}
-
-void Game::ProcessMouseUpEvent( const SDL_MouseButtonEvent& e )
-{
-	//std::cout << "MOUSEBUTTONUP event: ";
-	//switch ( e.button )
-	//{
-	//case SDL_BUTTON_LEFT:
-	//	std::cout << " left button " << std::endl;
-	//	break;
-	//case SDL_BUTTON_RIGHT:
-	//	std::cout << " right button " << std::endl;
-	//	break;
-	//case SDL_BUTTON_MIDDLE:
-	//	std::cout << " middle button " << std::endl;
-	//	break;
-	//}
-}
-
-void Game::ClearBackground( ) const
-{
-	glClearColor( 0.0f, 0.0f, 0.3f, 1.0f );
-	glClear( GL_COLOR_BUFFER_BIT );
+	glClearColor(0.0f, 0.0f, 0.3f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
 }

@@ -14,7 +14,7 @@ struct Level
 
 	void Draw() const
 	{
-		SetColor(Color4f{ 0.f,0.f,0.f,1.f });
+		SetColor(Color4f{ 1.f,1.f,1.f,1.f });
 		for (size_t i = 0; i < m_Vertices.size(); i++)
 		{
 			DrawPolygon(m_Vertices[i]);

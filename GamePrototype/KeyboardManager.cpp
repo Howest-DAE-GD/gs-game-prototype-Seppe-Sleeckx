@@ -1,85 +1,54 @@
 #include "pch.h"
 #include "KeyboardManager.h"
 
-const float KeyboardManager::PressedThreshold{0.2f};
-std::vector<SDL_Scancode> KeyboardManager::m_HeldKeys{};
-std::vector<KeyboardKey> KeyboardManager::m_PressedKeys{};
-
-void KeyboardManager::Update(float elapsedSec)
+void KeyboardManager::Update(const float elapsedSec)
 {
-	for (size_t p = 0; p < m_PressedKeys.size(); p++)
+	for (size_t p = 0; p < m_KeyQueue.size(); p++)
 	{
-		m_PressedKeys[p].SecondsPressed += elapsedSec;
-		if (m_PressedKeys[p].SecondsPressed >= PressedThreshold)
+		m_KeyQueue[p].SecondsPressed += elapsedSec;
+		if (m_KeyQueue[p].SecondsPressed >= m_PressedKeyThreshold)
 		{
-			m_HeldKeys.push_back(m_PressedKeys[p].ScanCode);
-			m_PressedKeys.erase(m_PressedKeys.begin() + p);
+			m_HeldKeys.push_back(m_KeyQueue[p].ScanCode);
+			m_KeyQueue.erase(m_KeyQueue.begin() + p);
 		}
 	}
+	m_PressedKeys.clear();
 }
 
-void KeyboardManager::ProcessKeyDownEvent(SDL_Scancode scanCode)
+void KeyboardManager::ProcessKeyDownEvent(const SDL_Scancode scancode)
 {
-	bool isActive{ false };
-	for (size_t i = 0; i < m_PressedKeys.size(); i++)
-	{
-		if (m_PressedKeys[i].ScanCode == scanCode)
-		{
-			isActive = true;
-		}
-	}
-	for (size_t i = 0; i < m_HeldKeys.size(); i++)
-	{
-		if (m_HeldKeys[i] == scanCode)
-		{
-			isActive = true;
-		}
-	}
+	bool isActive{ IsKeyActive(scancode)};
 	if (!isActive)
 	{
-		KeyboardKey k{ scanCode };
-		m_PressedKeys.push_back(k);
-	}
-
-}
-
-void KeyboardManager::ProcessKeyUpEvent(SDL_Scancode scanCode)
-{
-	for (size_t i = 0; i < m_PressedKeys.size(); i++)
-	{
-		if (m_PressedKeys[i].ScanCode == scanCode)
-		{
-			m_PressedKeys.erase(m_PressedKeys.begin() + i);
-			return;
-		}
-	}
-	for (size_t h = 0; h < m_HeldKeys.size(); h++)
-	{
-		if (m_HeldKeys[h] == scanCode)
-		{
-			m_HeldKeys.erase(m_HeldKeys.begin() + h);
-			return;
-		}
+		KeyboardKey k{ scancode };
+		m_KeyQueue.push_back(k); 
+		m_PressedKeys.push_back(scancode);
 	}
 }
 
-bool KeyboardManager::IsKeyPressed(SDL_Scancode scanCode)
-{
-	for (size_t i = 0; i < m_PressedKeys.size(); i++)
-	{
-		if (m_PressedKeys[i].ScanCode == scanCode)
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
-bool KeyboardManager::IsKeyHeld(SDL_Scancode scanCode)
+void KeyboardManager::ProcesskeyUpEvent(const SDL_Scancode scancode)
 {
 	for (size_t i = 0; i < m_HeldKeys.size(); i++)
 	{
-		if (m_HeldKeys[i] == scanCode)
+		if (m_HeldKeys[i] == scancode)
+		{
+			m_HeldKeys.erase(m_HeldKeys.begin() + i);
+		}
+	}
+	for (size_t p = 0; p < m_KeyQueue.size(); p++)
+	{
+		if (m_KeyQueue[p].ScanCode == scancode)
+		{
+			m_KeyQueue.erase(m_KeyQueue.begin() + p);
+		}
+	}
+}
+
+bool KeyboardManager::IsKeyHeld(const SDL_Scancode scancode)
+{
+	for (size_t i = 0; i < m_HeldKeys.size(); i++)
+	{
+		if (m_HeldKeys[i] == scancode)
 		{
 			return true;
 		}
@@ -87,36 +56,35 @@ bool KeyboardManager::IsKeyHeld(SDL_Scancode scanCode)
 	return false;
 }
 
-bool KeyboardManager::IsKeyActive(SDL_Scancode scanCode)
+bool KeyboardManager::IsKeyInQueue(const SDL_Scancode scancode)
 {
-	if (IsKeyHeld(scanCode) || IsKeyPressed(scanCode))
+	for (size_t i = 0; i < m_KeyQueue.size(); i++)
+	{
+		if (m_KeyQueue[i].ScanCode == scancode)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool KeyboardManager::IsKeyPressed(const SDL_Scancode scancode)
+{
+	for (size_t i = 0; i < m_PressedKeys.size(); i++)
+	{
+		if (m_PressedKeys[i] == scancode)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool KeyboardManager::IsKeyActive(const SDL_Scancode scancode)
+{
+	if (IsKeyHeld(scancode) || IsKeyInQueue(scancode))
 	{
 		return true;
 	}
 	return false;
-}
-
-std::vector<SDL_Scancode>& KeyboardManager::GetHeldKeys()
-{
-	return m_HeldKeys;
-}
-
-std::vector<SDL_Scancode>& KeyboardManager::GetPressedKeys()
-{
-	std::vector<SDL_Scancode> returnList{};
-	for (size_t i = 0; i < m_PressedKeys.size(); i++)
-	{
-		returnList.push_back(m_PressedKeys[i].ScanCode);
-	}
-	return returnList;
-}
-
-std::vector<SDL_Scancode>& KeyboardManager::GetActiveKeys()
-{
-	std::vector<SDL_Scancode>& returnList{ m_HeldKeys };
-	for (size_t i = 0; i < m_PressedKeys.size(); i++)
-	{
-		returnList.push_back(m_PressedKeys[i].ScanCode);
-	}
-	return returnList;
 }

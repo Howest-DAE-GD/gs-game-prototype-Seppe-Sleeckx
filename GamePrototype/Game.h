@@ -1,7 +1,11 @@
 #pragma once
 #include "BaseGame.h"
-#include "Guard.h"
 #include "Level.h"
+#include "PlayerManager.h"
+#include "GuardManager.h"
+#include "Camera.h"
+#include "Texture.h"
+#include "Orb.h"
 class Game : public BaseGame
 {
 public:
@@ -23,10 +27,19 @@ public:
 	void ProcessMouseDownEvent( const SDL_MouseButtonEvent& e ) override;
 	void ProcessMouseUpEvent( const SDL_MouseButtonEvent& e ) override;
 
+
 private:
-	Guard* g_Guard;
+	PlayerManager* g_PlayerOne;
+	GuardManager* g_GuardManager;
 	Level* g_Level;
-	float angle{ 0 };
+	Camera* g_Camera;
+	Texture* g_GameOverImage{ nullptr };
+	Texture* g_ScoreText{};
+	float g_GameOverImageScale;
+	bool g_GameOver{ false };
+	std::vector<Orb*> g_Orbs;
+	double g_AccumulatedTimeInSeconds{0.f};
+	int g_Score{ 0 };
 	// FUNCTIONS
 	void Initialize();
 	void Cleanup( );
