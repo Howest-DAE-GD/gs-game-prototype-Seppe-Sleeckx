@@ -29,20 +29,17 @@ GuardManager::~GuardManager()
 	}
 }
 
-
 bool GuardManager::Update(float elapsedSec, const std::vector<std::vector<Point2f>>& mapVertices)
 {
-	bool spotted{ false };
 	for (size_t i = 0; i < m_Guards.size(); i++)
 	{
 		m_Guards[i]->Update(elapsedSec,mapVertices);
-		if (static_cast<Guard*>(m_Guards[i]->GetCharacterPtr())->SpotTarget(*m_Target))
+		if (static_cast<Guard*>(m_Guards[i]->GetCharacterPtr())->SpotTarget(m_Target->m_Color,m_Target->GetPosition(),mapVertices))
 		{
-			spotted = true;
-			break;
+			return true;
 		}
 	}
-	return spotted;
+	return false;
 }
 
 void GuardManager::Draw()

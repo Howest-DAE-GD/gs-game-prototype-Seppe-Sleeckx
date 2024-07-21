@@ -16,11 +16,6 @@ Guard::~Guard()
 	delete m_VisionCone;
 }
 
-bool Guard::Update(float elapsedSec, const std::vector<std::vector<Point2f>>& collisionVertices)
-{
-	return Character::Update(elapsedSec, collisionVertices);
-}
-
 void Guard::Draw() const
 {
 	glPushMatrix();
@@ -38,26 +33,26 @@ void Guard::ChangeDirection(Vector2f newDirection)
 	Character::ChangeDirection(newDirection);
 }
 
-bool Guard::SpotTarget(Character& target)
+bool Guard::SpotTarget(Color4f& targetColor, Point2f targetPos, const std::vector<std::vector<Point2f>>& collisionVertices)
 {
-	if (!(target.m_Color.r == m_Color.r && target.m_Color.g == m_Color.g && target.m_Color.b == m_Color.b))
+	if (m_VisionCone->IsPointInCone(targetPos, m_Position) && targetColor != m_Color)
 	{
-		double startAngle{ atan2(m_VisionCone->m_FacingVector.y, m_VisionCone->m_FacingVector.x) };
-		double endAngle{ startAngle - atan2(m_VisionCone->m_VisionWidth / 2, m_VisionCone->m_VisionLength) };
-		startAngle += atan2(m_VisionCone->m_VisionWidth / 2, m_VisionCone->m_VisionLength);
-		utils::HitInfo hitInfo{};
-		std::vector<Point2f> targetGeometry{ target.GetModelGeometry() };
-		for (double angle{ startAngle }; angle > endAngle; angle -= M_PI / 4.f)
+		HitInfo hitInfo{};
+		for (int index{}; index < collisionVertices.size(); ++index)
 		{
-			Point2f rayEndPoint{
-				m_Position.x + (float)cos(angle) * m_VisionCone->m_VisionLength - (float)sin(angle) * m_VisionCone->m_VisionWidth / 2,
-				m_Position.y + (float)sin(angle) * m_VisionCone->m_VisionLength - (float)cos(angle) * m_VisionCone->m_VisionWidth / 2
-			};
-			if (Raycast(targetGeometry, m_Position, rayEndPoint, hitInfo))
+			if (Raycast(collisionVertices[index], m_Position, targetPos, hitInfo))
 			{
-				return true;
+				float distanceToTarget = sqrt(pow(targetPos.x - m_Position.x, 2) + pow(targetPos.y - m_Position.y, 2));
+				if (distanceToTarget <= hitInfo.lambda)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
 			}
-
+			return true;
 		}
 	}
 	return false;

@@ -147,6 +147,7 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Character.cpp" />
@@ -159,11 +160,13 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClCompile Include="MouseManager.cpp" />
     <ClCompile Include="NPCManager.cpp" />
     <ClCompile Include="Orb.cpp" />
+    <ClCompile Include="OrbIndicator.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="PlayerManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Arrow.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Character.h" />
@@ -178,10 +181,15 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClInclude Include="MouseManager.h" />
     <ClInclude Include="NPCManager.h" />
     <ClInclude Include="Orb.h" />
+    <ClInclude Include="OrbIndicator.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PlayerManager.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="VisionCone.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GamePrototype.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

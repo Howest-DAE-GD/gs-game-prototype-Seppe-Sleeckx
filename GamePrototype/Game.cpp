@@ -2,20 +2,17 @@
 #include "Game.h"
 #include "Guard.h"
 #include "InputManager.h"
+#include "VisionCone.h"
 
 Game::Game(const Window& window)
 	:BaseGame{ window },
 	g_Level{ new Level{} },
 	g_Camera{ new Camera{GetViewPort().width, GetViewPort().height, 1.f} },
-	g_PlayerOne{ new PlayerManager{new InputManager{}, new Character{ Point2f{1000,500}, Color4f{1.f,1.f,0.f,1.f} } } },
+	g_Orb{ new Orb{} },
+	g_PlayerOne{ new PlayerManager{new InputManager{}, new Character{ Point2f{1000,500}, Color4f{1.f,1.f,0.f,1.f} },GetViewPort()}},
 	g_GuardManager{ new GuardManager{ 10, g_PlayerOne->GetCharacterPtr()} },
 	g_ScoreText{ new Texture("0", "Font.ttf", 40, Color4f{1.f,0.5f,0.f,1.f}) }
 {
-	for (size_t i = 0; i < 10; i++)
-	{
-		g_Orbs.push_back(new Orb());
-	}
-	g_Orbs.push_back(new Orb(Point2f{1000,500}));
 	Initialize();
 }
 
@@ -26,7 +23,7 @@ Game::~Game()
 
 void Game::Initialize()
 {
-
+	g_PlayerOne->AssignNewTarget(g_Orb);
 }
 
 void Game::Cleanup()
@@ -37,6 +34,7 @@ void Game::Cleanup()
 	delete g_Camera;
 	delete g_GameOverImage;
 	delete g_ScoreText;
+	delete g_Orb;
 }
 
 void Game::Update(float elapsedSec)
@@ -44,10 +42,10 @@ void Game::Update(float elapsedSec)
 	g_GameOver = g_GuardManager->Update(elapsedSec, g_Level->m_Vertices);
 	std::vector<Character*> enemies{ g_GuardManager->GetGuardPtrs() };
 	g_PlayerOne->Update(elapsedSec, enemies, g_Level->m_Vertices, g_Camera->GetPosition(), const_cast<Rectf&>(GetViewPort()));
-	if (g_GameOver && g_GameOverImage==nullptr)
+	if (g_GameOver && g_GameOverImage == nullptr)
 	{
 		g_GameOverImage = new Texture{ "funny_cat_meme.jpg" };
-		g_GameOverImageScale = GetViewPort().width/ g_GameOverImage->GetWidth();
+		g_GameOverImageScale = GetViewPort().width / g_GameOverImage->GetWidth();
 	}
 	g_AccumulatedTimeInSeconds += elapsedSec;
 	if (g_AccumulatedTimeInSeconds > 10.f)
@@ -55,16 +53,12 @@ void Game::Update(float elapsedSec)
 		g_GuardManager->AddGuards(2);
 		g_AccumulatedTimeInSeconds = 0.f;
 	}
-
-	for (size_t i = 0; i < g_Orbs.size(); i++)
+	if (g_Orb->CheckHit(g_PlayerOne->GetCharacterPtr()))
 	{
-		if (g_Orbs[i]->CheckHit(g_PlayerOne->GetCharacterPtr()))
-		{
-			++g_Score;
-			delete g_ScoreText;
-			g_ScoreText = new Texture(std::to_string(g_Score), "Font.ttf", 40, Color4f{ 1.f,0.5f,0.f,1.f });
-			g_Orbs[i]->SetNewPosition();
-		}
+		++g_Score;
+		delete g_ScoreText;
+		g_ScoreText = new Texture(std::to_string(g_Score), "Font.ttf", 40, Color4f{ 1.f,0.5f,0.f,1.f });
+		g_Orb->SetNewPosition();
 	}
 }
 
@@ -73,8 +67,6 @@ void Game::Draw() const
 	ClearBackground();
 	g_Camera->Aim(GetViewPort().width, g_PlayerOne->GetPosition());
 	{
-
-
 		g_Level->Draw();
 		g_PlayerOne->Draw();
 		for (size_t i = 0; i < g_GuardManager->AmountOfGuards(); i++)
@@ -84,13 +76,11 @@ void Game::Draw() const
 				g_GuardManager->Draw(i);
 			}
 		}
-		for (size_t i = 0; i < g_Orbs.size(); i++)
-		{
-			g_Orbs[i]->Draw();
-		}
+		g_Orb->Draw();
 	}
 	g_Camera->Reset();
-	if (g_GameOverImage!= nullptr)
+	g_PlayerOne->DrawOrbIndicator();
+	if (g_GameOverImage != nullptr)
 	{
 		glPushMatrix();
 		{
@@ -99,13 +89,13 @@ void Game::Draw() const
 		}
 		glPopMatrix();
 	}
-	
+
 	Point2f textPos{
 		0.f,
 		GetViewPort().height - g_ScoreText->GetHeight()
 	};
 	g_ScoreText->Draw(textPos);
-	
+
 }
 
 void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)

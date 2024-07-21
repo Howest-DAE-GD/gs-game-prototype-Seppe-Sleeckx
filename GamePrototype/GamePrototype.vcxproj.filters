@@ -49,14 +49,20 @@
     <Filter Include="Tools\Camera">
       <UniqueIdentifier>{c4236e6b-1cf2-44b4-bb5b-d1399ed127f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObjects\PLayer">
-      <UniqueIdentifier>{2abf3b32-7a15-4d36-9b2e-17c548437d14}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameObjects\Bullet">
       <UniqueIdentifier>{6b13bcbb-2fa9-4fb6-ae3a-c027869f38df}</UniqueIdentifier>
     </Filter>
     <Filter Include="GameObjects\Orb">
       <UniqueIdentifier>{c885df87-942d-422e-a5a7-c78d4e13f55c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Player">
+      <UniqueIdentifier>{2abf3b32-7a15-4d36-9b2e-17c548437d14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\IndicatorArrow">
+      <UniqueIdentifier>{cba1ff91-196e-4bd5-afd6-1d3c5b29228b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\IndicatorArrow\Arrow">
+      <UniqueIdentifier>{2e842545-0076-48b0-998b-b551a4bdd4f0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -97,13 +103,19 @@
       <Filter>Tools\Camera</Filter>
     </ClCompile>
     <ClCompile Include="PlayerManager.cpp">
-      <Filter>GameObjects\PLayer</Filter>
+      <Filter>GameObjects\Player</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>GameObjects\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Orb.cpp">
       <Filter>GameObjects\Orb</Filter>
+    </ClCompile>
+    <ClCompile Include="OrbIndicator.cpp">
+      <Filter>GameObjects\IndicatorArrow</Filter>
+    </ClCompile>
+    <ClCompile Include="Arrow.cpp">
+      <Filter>GameObjects\IndicatorArrow\Arrow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -153,7 +165,7 @@
       <Filter>Tools\Camera</Filter>
     </ClInclude>
     <ClInclude Include="PlayerManager.h">
-      <Filter>GameObjects\PLayer</Filter>
+      <Filter>GameObjects\Player</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>GameObjects\Bullet</Filter>
@@ -161,5 +173,19 @@
     <ClInclude Include="Orb.h">
       <Filter>GameObjects\Orb</Filter>
     </ClInclude>
+    <ClInclude Include="OrbIndicator.h">
+      <Filter>GameObjects\IndicatorArrow</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Arrow.h">
+      <Filter>GameObjects\IndicatorArrow\Arrow</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GamePrototype.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

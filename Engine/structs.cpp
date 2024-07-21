@@ -25,6 +25,22 @@ Point2f::Point2f( float x, float y )
 }
 
 //-----------------------------------------------------------------
+// Point2f Operators
+//-----------------------------------------------------------------
+
+Point2f operator+ (Point2f lhs, const Point2f& rhs)
+{
+	return lhs += rhs;
+}
+
+Point2f& Point2f::operator+=(const Point2f& rhs)
+{
+	x += rhs.x;
+	y += rhs.y;
+	return *this;
+}
+
+//-----------------------------------------------------------------
 // Rectf Constructors
 //-----------------------------------------------------------------
 Rectf::Rectf( )
@@ -40,6 +56,8 @@ Rectf::Rectf( float left, float bottom, float width, float height )
 {
 }
 
+
+
 //-----------------------------------------------------------------
 // Color4f Constructors
 //-----------------------------------------------------------------
@@ -54,6 +72,20 @@ Color4f::Color4f( float r, float g, float b, float a )
 	,b{ b }
 	,a{ a }
 {
+}
+
+bool operator==(const Color4f& lhs, const Color4f& rhs)
+{
+	if (lhs.r == rhs.r && lhs.g == rhs.g && lhs.b == rhs.b && lhs.a == rhs.a)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool operator!=(const  Color4f& lhs, const Color4f& rhs)
+{
+	return !(lhs == rhs);
 }
 
 //-----------------------------------------------------------------

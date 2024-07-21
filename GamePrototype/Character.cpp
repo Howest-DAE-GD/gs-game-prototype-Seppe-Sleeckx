@@ -43,10 +43,6 @@ bool Character::Update(float elapsedSec, const std::vector<std::vector<Point2f>>
 	{
 		for (float angle{}; angle < 2*M_PI; angle += M_PI/2)
 		{
-			//Point2f rayEndPoint{
-			//m_Position.x + (float)cos(angle) * (m_Model.width/2) - (float)sin(angle) * (m_Model.height / 2),
-			//m_Position.y + (float)sin(angle) * (m_Model.width / 2) - (float)cos(angle) * (m_Model.height / 2)
-			//};
 			Point2f rayEndPoint{
 				m_Position.x + (float)cos(angle) * (m_Model.width / 2),
 				m_Position.y + (float)sin(angle) * (m_Model.height / 2)

@@ -37,7 +37,7 @@ private:
 	Texture* g_ScoreText{};
 	float g_GameOverImageScale;
 	bool g_GameOver{ false };
-	std::vector<Orb*> g_Orbs;
+	Orb* g_Orb;
 	double g_AccumulatedTimeInSeconds{0.f};
 	int g_Score{ 0 };
 	// FUNCTIONS

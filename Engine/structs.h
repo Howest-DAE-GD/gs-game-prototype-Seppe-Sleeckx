@@ -17,10 +17,13 @@ struct Point2f
 	Point2f( );
 	explicit Point2f( float x, float y );
 
+	Point2f& operator+=(const Point2f& rhs);
+
 	float x;
 	float y;
 };
 
+Point2f operator+(Point2f lhs, const Point2f& rhs);
 
 
 struct Rectf
@@ -46,6 +49,9 @@ struct Color4f
 	float b;
 	float a;
 };
+
+bool operator==(const Color4f& lhs, const Color4f& rhs);
+bool operator!=(const  Color4f& lhs, const Color4f& rhs);
 
 struct Circlef
 {

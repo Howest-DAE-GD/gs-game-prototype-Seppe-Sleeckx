@@ -2,12 +2,13 @@
 #include "PlayerManager.h"
 #include "InputManager.h"
 #include "Bullet.h"
+#include "OrbIndicator.h"
 
-
-PlayerManager::PlayerManager(InputManager* pInputManager, Character* pCharacter):
-	m_pCharacter{pCharacter},
-	m_pInputManager{pInputManager},
-	m_pBullet{nullptr}
+PlayerManager::PlayerManager(InputManager* pInputManager, Character* pCharacter, const Rectf& viewport) :
+	m_pCharacter{ pCharacter },
+	m_pInputManager{ pInputManager },
+	m_pBullet{ nullptr },
+	m_pOrbIndicator{ new OrbIndicator{Point2f{viewport.width / 2.f - m_pCharacter->GetModelRect().width/2, viewport.height / 2.f - m_pCharacter->GetModelRect().height / 2}}}
 {
 
 }
@@ -22,7 +23,7 @@ PlayerManager::~PlayerManager()
 	}
 }
 
-void PlayerManager::Update(const float elapsedSec, std::vector<Character*> enemies, const std::vector<std::vector<Point2f>>& mapVertices, Point2f cameraPosition, Rectf& viewPort)
+void PlayerManager::Update(const float elapsedSec, std::vector<Character*> enemies, const std::vector<std::vector<Point2f>>& mapVertices, Point2f cameraPosition, const Rectf& viewPort)
 {
 	Vector2f playerDirection = Vector2f{ 0,0 };
 	if (m_pInputManager->IsKeyActive(SDL_SCANCODE_A))
@@ -67,6 +68,7 @@ void PlayerManager::Update(const float elapsedSec, std::vector<Character*> enemi
 	}
 	m_pCharacter->Update(elapsedSec, mapVertices);
 	m_pInputManager->Update(elapsedSec);
+	m_pOrbIndicator->UpdateAngle(GetPosition());
 }
 
 void PlayerManager::Draw()
@@ -76,6 +78,11 @@ void PlayerManager::Draw()
 	{
 		m_pBullet->Draw();
 	}
+}
+
+void PlayerManager::DrawOrbIndicator()
+{
+	m_pOrbIndicator->Draw();
 }
 
 void PlayerManager::ChangeCharacter(Character* pCharacter)
@@ -94,6 +101,11 @@ void PlayerManager::ChangeCharacter(Character* pCharacter)
 Point2f PlayerManager::GetPosition()
 {
 	return m_pCharacter->GetPosition();
+}
+
+void PlayerManager::AssignNewTarget(Orb* target)
+{
+	m_pOrbIndicator->AssignNewTarget(target);
 }
 
 void PlayerManager::ProcessMouseDownEvent(const Uint8 mouseIndex)

@@ -22,11 +22,6 @@ struct VisionCone
 	{
 	}
 
-	~VisionCone()
-	{
-		delete[] m_VisionConeGeometry;
-	}
-
 	void Draw() const
 	{
 		SetColor(m_Color);
@@ -53,6 +48,23 @@ struct VisionCone
 			m_FacingVector = newDirection;
 			Rotate();
 		}
+	}
+
+
+	bool IsPointInCone(Point2f target, Point2f OwnPos)
+	{
+		Point2f p1 = m_VisionConeGeometry[0] + OwnPos;
+		Point2f p2 = m_VisionConeGeometry[1] + OwnPos;
+		Point2f p3 = m_VisionConeGeometry[2] + OwnPos;
+		float coneArea{ abs(p1.x * p2.y + p2.x * p3.y + p3.x * p1.y - p1.x * p3.y - p2.x * p1.y - p3.x * p2.y) / 2 }; //Area of visionCone
+		float SumTargetArea{ abs(target.x * p2.y + p2.x * p3.y + p3.x * target.y - target.x * p3.y - p2.x * target.y - p3.x * p2.y) / 2 }; //Area of p1, p2 and target
+		SumTargetArea += abs(p1.x * target.y + target.x * p3.y + p3.x * p1.y - p1.x * p3.y - target.x * p1.y - p3.x * target.y) / 2; // Area of p2, p3 and target
+		SumTargetArea += abs(p1.x * p2.y + p2.x * target.y + target.x * p1.y - p1.x * target.y - p2.x * p1.y - target.x * p2.y) / 2; //Area of p3,p1 and target
+		if (SumTargetArea == coneArea)
+		{
+			return true;
+		}
+		return false;
 	}
 
 
