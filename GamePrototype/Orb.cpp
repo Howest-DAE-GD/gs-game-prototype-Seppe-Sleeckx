@@ -23,7 +23,7 @@ bool Orb::CheckHit(Character* target)
 
 void Orb::SetNewPosition()
 {
-	m_Circle.center.x = rand() % 2000;
+	m_Circle.center.x = rand() % 1800;
 	m_Circle.center.y = rand() % 1000;
 }
 

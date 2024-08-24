@@ -12,7 +12,7 @@ public:
 	virtual void ChangeDirection(Vector2f newDirection) override;
 	bool SpotTarget(Color4f& targetColor, Point2f targetPos, const std::vector<std::vector<Point2f>>& collisionVertices);
 
-	float cooldownTimer{};
+	bool m_VisionConeVisibility{ true };
 private:
 	VisionCone* m_VisionCone;
 };

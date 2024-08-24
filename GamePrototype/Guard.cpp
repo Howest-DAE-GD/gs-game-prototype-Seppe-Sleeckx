@@ -20,8 +20,11 @@ void Guard::Draw() const
 {
 	glPushMatrix();
 	{
-		glTranslatef(m_Position.x, m_Position.y, 0.f);
-		m_VisionCone->Draw();
+		if (m_VisionConeVisibility)
+		{
+			glTranslatef(m_Position.x, m_Position.y, 0.f);
+			m_VisionCone->Draw();
+		}
 	}
 	glPopMatrix();
 	Character::Draw();
@@ -52,7 +55,6 @@ bool Guard::SpotTarget(Color4f& targetColor, Point2f targetPos, const std::vecto
 					return false;
 				}
 			}
-			return true;
 		}
 	}
 	return false;

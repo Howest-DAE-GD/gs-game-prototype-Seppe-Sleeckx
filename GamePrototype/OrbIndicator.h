@@ -6,7 +6,7 @@ class Orb;
 class OrbIndicator : public Arrow
 {
 public:
-	OrbIndicator(Point2f startPos, Orb* target = nullptr);
+	OrbIndicator(Point2f screenCenter, Orb* target = nullptr);
 	~OrbIndicator();
 
 	virtual void Draw() override;

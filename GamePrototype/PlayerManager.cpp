@@ -3,6 +3,7 @@
 #include "InputManager.h"
 #include "Bullet.h"
 #include "OrbIndicator.h"
+#include "Guard.h"
 
 PlayerManager::PlayerManager(InputManager* pInputManager, Character* pCharacter, const Rectf& viewport) :
 	m_pCharacter{ pCharacter },
@@ -49,6 +50,17 @@ void PlayerManager::Update(const float elapsedSec, std::vector<Character*> enemi
 		if (pHitCharacter != nullptr)
 		{
 			ChangeCharacter(pHitCharacter);
+			for (size_t i = 0; i < enemies.size(); i++)
+			{
+				if (enemies[i]->m_Color ==m_pCharacter->m_Color)
+				{
+					static_cast<Guard*> (enemies[i])->m_VisionConeVisibility = false;
+				}
+				else
+				{
+					static_cast<Guard*> (enemies[i])->m_VisionConeVisibility = true;
+				}
+			}
 		}
 		else if (m_pBullet->GetDeathTimer() > 3.f)
 		{

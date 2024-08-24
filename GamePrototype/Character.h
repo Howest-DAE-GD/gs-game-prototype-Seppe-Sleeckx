@@ -8,7 +8,7 @@ class Character
 {
 public:
 	//Constuctor
-	Character(Point2f startpos, Color4f color, float speed=90.f);
+	Character(Point2f startpos, Color4f color, float speed=120.f);
 
 	//rest
 	virtual void Move(float elapsedSec);

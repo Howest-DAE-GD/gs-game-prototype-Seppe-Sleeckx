@@ -2,8 +2,8 @@
 #include "OrbIndicator.h"
 #include "Orb.h"
 
-OrbIndicator::OrbIndicator(Point2f startPos, Orb* target) :
-	Arrow(startPos, 100.f, new Color4f{ 1.f,1.f,0.f,1.f }),
+OrbIndicator::OrbIndicator(Point2f screenCenter, Orb* target) :
+	Arrow(screenCenter, 100.f, new Color4f{ 1.f,1.f,0.f,1.f }),
 	m_pTarget{target}
 {
 

@@ -61,7 +61,7 @@ std::vector<Character*> GuardManager::GetGuardPtrs()
 	return guardPtrs;
 }
 
-void GuardManager::AddGuards(int amount)
+void GuardManager::AddGuards(int amount, Color4f& color)
 {
 	for (size_t i = 0; i < amount; i++)
 	{
@@ -76,7 +76,12 @@ void GuardManager::AddGuards(int amount)
 		Color4f color{
 			GuardColors[rand() % 2]
 		};
-		m_Guards.push_back(new NPCManager{ new Guard{position, color } });
+		Guard* guard{ new Guard{position, color } };
+		if (guard->m_Color == color)
+		{
+			guard->m_VisionConeVisibility = false;
+		}
+		m_Guards.push_back(new NPCManager{ guard });
 	}
 }
 

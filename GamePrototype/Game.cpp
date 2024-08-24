@@ -9,7 +9,7 @@ Game::Game(const Window& window)
 	g_Level{ new Level{} },
 	g_Camera{ new Camera{GetViewPort().width, GetViewPort().height, 1.f} },
 	g_Orb{ new Orb{} },
-	g_PlayerOne{ new PlayerManager{new InputManager{}, new Character{ Point2f{1000,500}, Color4f{1.f,1.f,0.f,1.f} },GetViewPort()}},
+	g_PlayerOne{ new PlayerManager{new InputManager{}, new Character{ Point2f{1000,500}, Color4f{1.f,0.5f,0.f,1.f} },GetViewPort()}},
 	g_GuardManager{ new GuardManager{ 10, g_PlayerOne->GetCharacterPtr()} },
 	g_ScoreText{ new Texture("0", "Font.ttf", 40, Color4f{1.f,0.5f,0.f,1.f}) }
 {
@@ -50,7 +50,8 @@ void Game::Update(float elapsedSec)
 	g_AccumulatedTimeInSeconds += elapsedSec;
 	if (g_AccumulatedTimeInSeconds > 10.f)
 	{
-		g_GuardManager->AddGuards(2);
+		
+		g_GuardManager->AddGuards(2, g_PlayerOne->GetCharacterPtr()->m_Color);
 		g_AccumulatedTimeInSeconds = 0.f;
 	}
 	if (g_Orb->CheckHit(g_PlayerOne->GetCharacterPtr()))

@@ -19,7 +19,8 @@ void Arrow::Draw()
 {
 	SetColor(*m_Color);
 	Point2f endPoint{ m_StartPos.x + cosf(m_Angle) * m_Length, m_StartPos.y + sinf(m_Angle) * m_Length };
-	DrawLine(m_StartPos, endPoint);
+	Point2f startPos{ m_StartPos.x + cosf(m_Angle) * 30, m_StartPos.y + sinf(m_Angle) * 30 };
+	DrawLine(startPos, endPoint);
 	float leftAngle{ m_Angle + 15.f };
 	Point2f leftEndPoint{ endPoint.x + 20.f * cosf(leftAngle), endPoint.y + 20.f * sinf(leftAngle) };
 	DrawLine(endPoint, leftEndPoint);

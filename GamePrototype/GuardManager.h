@@ -13,7 +13,7 @@ public:
 	void Draw();
 	void Draw(int index);
 	int AmountOfGuards();
-	void AddGuards(int amount);
+	void AddGuards(int amount, Color4f& color);
 	Point2f GetGuardPosition(int index);
 
 	std::vector<Character*> GetGuardPtrs();
