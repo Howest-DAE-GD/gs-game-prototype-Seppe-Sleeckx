@@ -7,15 +7,15 @@ GuardManager::GuardManager(int amountOfGuards, Character* target) :
 	for (size_t i = 0; i < amountOfGuards; i++)
 	{
 		Point2f position{
-			(float)(rand() % 2000),
-			(float)(rand() % 1000)
+			(float)(rand() % 1900 + 50),
+			(float)(rand() % 900 + 50)
 		};
 		if ((position - target->GetPosition()).Length() < 120)
 		{
 			position.x += 120;
 		}
 		Color4f color{
-			GuardColors[rand() % 2]
+			GuardColors[rand() % 3]
 		};
 		m_Guards.push_back(new NPCManager{ new Guard{position, color } });
 	};
@@ -74,13 +74,16 @@ void GuardManager::AddGuards(int amount, Color4f& color)
 			position.x += 120;
 		}
 		Color4f guardColor{
-			GuardColors[rand() % 2]
+			GuardColors[rand() % 3]
 		};
-		Guard* guard{ new Guard{position, guardColor } };
-		if (guard->m_Color == color)
+		if (color != Color4f{ 1.f,0.5f,0.f,1.f })
 		{
-			guard->m_VisionConeVisibility = false;
+			while (guardColor != color)
+			{
+				guardColor = GuardColors[rand() % 3];
+			}
 		}
+		Guard* guard{ new Guard{position, guardColor } };
 		m_Guards.push_back(new NPCManager{ guard });
 	}
 }

@@ -2,6 +2,7 @@
 #include "Bullet.h"
 #include "Character.h"
 
+
 using namespace utils;
 
 Bullet::Bullet(Point2f startPos, Vector2f direction) :
@@ -22,9 +23,33 @@ void Bullet::Draw()
 	glPopMatrix();
 }
 
-Character* Bullet::Update(const float elapsedSec, std::vector<Character*> enemies)
+Character* Bullet::Update(const float elapsedSec, std::vector<Character*> enemies, const std::vector<std::vector<Point2f>>& mapVertices)
 {
 	Move(elapsedSec);
+	utils::HitInfo hitInfo{};
+	bool hit{ false };
+	// With environment
+	for (int index{}; index < mapVertices.size(); ++index)
+	{
+		for (float angle{}; angle < 2 * M_PI; angle += M_PI / 2)
+		{
+			Point2f rayEndPoint{
+				m_Pos.x + (float)cos(angle) * 3.f,
+				m_Pos.y + (float)sin(angle) * 3.f
+			};
+			if (Raycast(mapVertices[index], m_Pos, rayEndPoint, hitInfo))
+			{
+				if (hitInfo.normal.y != 0.f)
+				{
+					m_MovingVector.y *= -1;
+				}
+				if (hitInfo.normal.x != 0.f)
+				{
+					m_MovingVector.x *= -1;
+				}
+			}
+		}
+	}
 	Character* pCharacter = CheckHit(enemies);
 	m_DeathTimer += elapsedSec;
 	return pCharacter;

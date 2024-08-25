@@ -9,7 +9,7 @@ using namespace utils;
 Character::Character(Point2f startpos, Color4f color, float speed) :
 	m_Position{ startpos },
 	m_Color{ color },
-	m_Model{ Rectf{-5.f, -5.f, 10.f, 10.f } },
+	m_Model{ Rectf{-10.f, -10.f, 20.f, 20.f } },
 	m_MovingVector{},
 	m_Speed{speed}
 {
@@ -60,7 +60,7 @@ bool Character::Update(float elapsedSec, const std::vector<std::vector<Point2f>>
 void Character::MoveBackInsideBounds(const float elapsedSec, utils::HitInfo& hitInfo)
 {
 	//m_Position += hitInfo.normal * hitInfo.lambda;
-	m_Position += hitInfo.normal * ((m_Position - hitInfo.intersectPoint).Length() * 2.f);
+	m_Position += hitInfo.normal * ((m_Position - hitInfo.intersectPoint).Length());
 	
 }
 

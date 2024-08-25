@@ -5,7 +5,7 @@
 using namespace utils;
 
 Guard::Guard(Point2f startpos, Color4f color) :
-	Character(startpos, color),
+	Character(startpos, color, 180.f),
 	m_VisionCone{ new VisionCone{100, 40} }
 {
 

@@ -48,7 +48,7 @@ void PlayerManager::Update(const float elapsedSec, std::vector<Character*> enemi
 	m_pCharacter->ChangeDirection(playerDirection);
 	if (m_pBullet != nullptr)
 	{
-		Character* pHitCharacter= m_pBullet->Update(elapsedSec, enemies);
+		Character* pHitCharacter= m_pBullet->Update(elapsedSec, enemies, mapVertices);
 		if (pHitCharacter != nullptr)
 		{
 			ChangeCharacter(pHitCharacter);
@@ -64,7 +64,7 @@ void PlayerManager::Update(const float elapsedSec, std::vector<Character*> enemi
 				}
 			}
 		}
-		else if (m_pBullet->GetDeathTimer() > 3.f)
+		else if (m_pBullet->GetDeathTimer() > 1.5f)
 		{
 			delete m_pBullet;
 			m_pBullet = nullptr;
