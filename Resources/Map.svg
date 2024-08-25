@@ -24,13 +24,13 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="true"
-     inkscape:zoom="0.5385886"
-     inkscape:cx="2036.8051"
-     inkscape:cy="414.97351"
-     inkscape:window-width="3840"
-     inkscape:window-height="2054"
-     inkscape:window-x="-11"
-     inkscape:window-y="-11"
+     inkscape:zoom="0.19041983"
+     inkscape:cx="572.41939"
+     inkscape:cy="170.67551"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1">
     <inkscape:grid
@@ -81,17 +81,9 @@
        style="fill:#1a1a1a;stroke-width:1.71512"
        d="m 20,920 h 400 v 20 H 20 Z" />
     <path
-       id="rect10"
-       style="fill:#1a1a1a;stroke-width:2.02936"
-       d="m 100,840 h 20 v 80 h -20 z" />
-    <path
        id="rect12"
        style="fill:#1a1a1a;stroke-width:2.02936"
        d="m 200,840 h 20 v 80 h -20 z" />
-    <path
-       id="rect13"
-       style="fill:#1a1a1a;stroke-width:2.02936"
-       d="m 300,840 h 20 v 80 h -20 z" />
     <path
        id="rect14"
        style="fill:#1a1a1a;stroke-width:1.75748"
@@ -169,37 +161,21 @@
        style="fill:#1a1a1a;stroke-width:1.75748"
        d="m 1740,360 h 160 v 20 h -160 z" />
     <path
-       id="rect33"
-       style="fill:#1a1a1a;stroke-width:1.75748"
-       d="m 1760,440 h 40 v 20 h -40 z" />
-    <path
-       id="rect34"
-       style="fill:#1a1a1a;stroke-width:1.75748"
-       d="m 1760,520 h 40 v 20 h -40 z" />
-    <path
        id="rect35"
        style="fill:#1a1a1a;stroke-width:1.75748"
        d="m 1760,600 h 40 v 20 h -40 z" />
-    <path
-       id="rect36"
-       style="fill:#1a1a1a;stroke-width:1.75748"
-       d="m 1760,680 h 40 v 20 h -40 z" />
-    <path
-       id="rect37"
-       style="fill:#1a1a1a;stroke-width:1.75748"
-       d="m 1760,760 h 40 v 20 h -40 z" />
     <path
        id="rect38"
        style="fill:#1a1a1a;stroke-width:1.75748"
        d="m 1760,840 h 40 v 20 h -40 z" />
     <path
        id="rect39"
-       style="fill:#1a1a1a;stroke-width:1.75748"
-       d="m 1120,120 h 400 v 80 h -400 z" />
+       style="fill:#1a1a1a;stroke-width:0.883642"
+       d="m 1120,120 h 400 v 20.22376 h -400 z" />
     <path
        id="rect40"
-       style="fill:#1a1a1a;stroke-width:1.75748"
-       d="m 540,120 h 420 v 80 H 540 Z" />
+       style="fill:#1a1a1a;stroke-width:0.871174"
+       d="M 540,180.3429 H 960 V 200 H 540 Z" />
     <path
        id="rect41"
        style="fill:#1a1a1a;stroke-width:1.75748"

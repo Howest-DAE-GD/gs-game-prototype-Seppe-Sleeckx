@@ -67,6 +67,12 @@
     <Filter Include="GameObjects\UI_element">
       <UniqueIdentifier>{29c289db-5140-4db0-ac04-680f23411252}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjects\Bomb">
+      <UniqueIdentifier>{3a07a3f4-99be-4a66-95a9-8b1f2b8c2511}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\UI_element_Bomb">
+      <UniqueIdentifier>{0e64bd5f-1849-4827-8779-c493cdebaaef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -122,6 +128,12 @@
     </ClCompile>
     <ClCompile Include="UI_element.cpp">
       <Filter>GameObjects\UI_element</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>GameObjects\Bomb</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_element_2.cpp">
+      <Filter>GameObjects\UI_element_Bomb</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +202,12 @@
     </ClInclude>
     <ClInclude Include="UI_element.h">
       <Filter>GameObjects\UI_element</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>GameObjects\Bomb</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_element_2.h">
+      <Filter>GameObjects\UI_element_Bomb</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

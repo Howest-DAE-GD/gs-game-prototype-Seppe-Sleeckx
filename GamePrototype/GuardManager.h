@@ -14,6 +14,7 @@ public:
 	void Draw(int index);
 	int AmountOfGuards();
 	void AddGuards(int amount, Color4f& color);
+	void RemoveGuards(std::vector<int> guards );
 	Point2f GetGuardPosition(int index);
 
 	std::vector<Character*> GetGuardPtrs();

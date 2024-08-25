@@ -39,9 +39,10 @@ void Game::Cleanup()
 
 void Game::Update(float elapsedSec)
 {
-	g_GameOver = g_GuardManager->Update(elapsedSec, g_Level->m_Vertices);
 	std::vector<Character*> enemies{ g_GuardManager->GetGuardPtrs() };
-	g_PlayerOne->Update(elapsedSec, enemies, g_Level->m_Vertices, g_Camera->GetPosition(), const_cast<Rectf&>(GetViewPort()));
+	std::vector<int> hitGuards = g_PlayerOne->Update(elapsedSec, enemies, g_Level->m_Vertices, g_Camera->GetPosition(), const_cast<Rectf&>(GetViewPort()));
+	g_GuardManager->RemoveGuards(hitGuards);
+	g_GameOver = g_GuardManager->Update(elapsedSec, g_Level->m_Vertices);
 	if (g_GameOver && g_GameOverImage == nullptr)
 	{
 		g_GameOverImage = new Texture{ "funny_cat_meme.jpg" };

@@ -78,7 +78,7 @@ void GuardManager::AddGuards(int amount, Color4f& color)
 		};
 		if (color != Color4f{ 1.f,0.5f,0.f,1.f })
 		{
-			while (guardColor != color)
+			while (guardColor == color)
 			{
 				guardColor = GuardColors[rand() % 3];
 			}
@@ -101,4 +101,16 @@ int GuardManager::AmountOfGuards()
 Point2f GuardManager::GetGuardPosition(int index)
 {
 	return m_Guards[index]->GetCharacterPtr()->GetPosition();
+}
+
+void GuardManager::RemoveGuards(std::vector<int> guards)
+{
+	if (guards.size()>0)
+	{
+		for (size_t i = 0; i < guards.size(); i++)
+		{
+			delete m_Guards[guards[i]];
+			m_Guards.erase(m_Guards.begin() + guards[i]);
+		}
+	}
 }

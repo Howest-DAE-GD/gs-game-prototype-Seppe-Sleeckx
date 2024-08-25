@@ -5,13 +5,17 @@
 #include "OrbIndicator.h"
 #include "Guard.h"
 #include "UI_element.h"
+#include "Bomb.h"
+#include "UI_element_2.h"
 
 PlayerManager::PlayerManager(InputManager* pInputManager, Character* pCharacter, const Rectf& viewport) :
 	m_pCharacter{ pCharacter },
 	m_pInputManager{ pInputManager },
 	m_pBullet{ nullptr },
+	m_pBomb{nullptr},
 	m_pOrbIndicator{ new OrbIndicator{Point2f{viewport.width / 2.f - m_pCharacter->GetModelRect().width/2, viewport.height / 2.f - m_pCharacter->GetModelRect().height / 2}}},
-	m_pBulletUi{new UI_element{3.f, "UI_swap.jpg"}}
+	m_pBulletUi{new UI_element{1.5f, "UI_swap_0.jpg"}},
+	m_pBombUi{new UI_element_2{10.f, "UI_Bomb_0.jpg"}}
 {
 
 }
@@ -26,8 +30,12 @@ PlayerManager::~PlayerManager()
 	}
 }
 
-void PlayerManager::Update(const float elapsedSec, std::vector<Character*> enemies, const std::vector<std::vector<Point2f>>& mapVertices, Point2f cameraPosition, const Rectf& viewPort)
+std::vector<int> PlayerManager::Update(const float elapsedSec, std::vector<Character*> enemies, const std::vector<std::vector<Point2f>>& mapVertices, Point2f cameraPosition, const Rectf& viewPort)
 {
+	if (m_BombTimer > 0.f)
+	{
+		m_BombTimer -= elapsedSec;
+	}
 	Vector2f playerDirection = Vector2f{ 0,0 };
 	if (m_pInputManager->IsKeyActive(SDL_SCANCODE_A))
 	{
@@ -56,11 +64,11 @@ void PlayerManager::Update(const float elapsedSec, std::vector<Character*> enemi
 			{
 				if (enemies[i]->m_Color ==m_pCharacter->m_Color)
 				{
-					static_cast<Guard*> (enemies[i])->m_VisionConeVisibility = false;
+					static_cast<Guard*>(enemies[i])->m_VisionConeVisibility = false;
 				}
 				else
 				{
-					static_cast<Guard*> (enemies[i])->m_VisionConeVisibility = true;
+					static_cast<Guard*>(enemies[i])->m_VisionConeVisibility = true;
 				}
 			}
 		}
@@ -81,10 +89,33 @@ void PlayerManager::Update(const float elapsedSec, std::vector<Character*> enemi
 		m_pBullet = new Bullet(m_pCharacter->GetPosition(), direction.Normalized());
 		m_pBulletUi->RestartTimer();
 	}
+	std::vector<int> hitCharacters{};
+	if (m_pBomb != nullptr)
+	{
+		hitCharacters = m_pBomb->Update(elapsedSec, enemies, mapVertices);
+		if (m_pBomb->IsExploded())
+		{
+			delete m_pBomb;
+			m_pBomb = nullptr;
+			m_BombTimer = m_BombCooldown;
+		}
+	}
+	else if (m_pInputManager->IsMouseButtonPressed(InputManager::MouseButtonName::RIGHT_CLICK) && m_BombTimer <= 0.f)
+	{
+		Vector2f direction{
+				m_pInputManager->GetMousePosition().x - viewPort.width / 2,
+				m_pInputManager->GetMousePosition().y - viewPort.height / 2
+		};
+
+		m_pBomb = new Bomb(m_pCharacter->GetPosition(), direction.Normalized());
+		m_pBombUi->RestartTimer();
+	}
 	m_pCharacter->Update(elapsedSec, mapVertices);
 	m_pInputManager->Update(elapsedSec);
 	m_pOrbIndicator->UpdateAngle(GetPosition());
 	m_pBulletUi->Update(elapsedSec);
+	m_pBombUi->Update(elapsedSec);
+	return hitCharacters;
 }
 
 void PlayerManager::Draw()
@@ -94,11 +125,16 @@ void PlayerManager::Draw()
 	{
 		m_pBullet->Draw();
 	}
+	if (m_pBomb != nullptr)
+	{
+		m_pBomb->Draw();
+	}
 }
 
 void PlayerManager::DrawUI()
 {
 	m_pBulletUi->Draw();
+	m_pBombUi->Draw();
 }
 
 void PlayerManager::DrawOrbIndicator()
