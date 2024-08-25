@@ -64,6 +64,9 @@
     <Filter Include="GameObjects\IndicatorArrow\Arrow">
       <UniqueIdentifier>{2e842545-0076-48b0-998b-b551a4bdd4f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjects\UI_element">
+      <UniqueIdentifier>{29c289db-5140-4db0-ac04-680f23411252}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -116,6 +119,9 @@
     </ClCompile>
     <ClCompile Include="Arrow.cpp">
       <Filter>GameObjects\IndicatorArrow\Arrow</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_element.cpp">
+      <Filter>GameObjects\UI_element</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="Arrow.h">
       <Filter>GameObjects\IndicatorArrow\Arrow</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_element.h">
+      <Filter>GameObjects\UI_element</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

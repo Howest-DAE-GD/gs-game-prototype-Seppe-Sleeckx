@@ -55,6 +55,7 @@ bool Guard::SpotTarget(Color4f& targetColor, Point2f targetPos, const std::vecto
 					return false;
 				}
 			}
+			return true;
 		}
 	}
 	return false;

@@ -80,6 +80,7 @@ void Game::Draw() const
 		g_Orb->Draw();
 	}
 	g_Camera->Reset();
+	g_PlayerOne->DrawUI();
 	g_PlayerOne->DrawOrbIndicator();
 	if (g_GameOverImage != nullptr)
 	{

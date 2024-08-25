@@ -73,10 +73,10 @@ void GuardManager::AddGuards(int amount, Color4f& color)
 		{
 			position.x += 120;
 		}
-		Color4f color{
+		Color4f guardColor{
 			GuardColors[rand() % 2]
 		};
-		Guard* guard{ new Guard{position, color } };
+		Guard* guard{ new Guard{position, guardColor } };
 		if (guard->m_Color == color)
 		{
 			guard->m_VisionConeVisibility = false;

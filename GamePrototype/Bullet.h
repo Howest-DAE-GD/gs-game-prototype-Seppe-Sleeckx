@@ -17,7 +17,7 @@ private:
 
 	Point2f m_Pos;
 	const Vector2f m_MovingVector;
-	const float m_Speed{ 320.f };
+	const float m_Speed{ 500.f };
 	float m_DeathTimer{};
 };
 

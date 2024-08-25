@@ -4,6 +4,7 @@ class InputManager;
 class Bullet;
 class OrbIndicator;
 class Orb;
+class UI_element;
 
 class PlayerManager
 {
@@ -13,6 +14,7 @@ public:
 
 	void Update(const float elapsedSec, std::vector<Character*> enemies, const std::vector<std::vector<Point2f>>& mapVertices, Point2f cameraPosition, const Rectf& viewport);
 	void Draw();
+	void DrawUI();
 	void DrawOrbIndicator();
 
 	Point2f GetPosition();
@@ -32,5 +34,6 @@ private:
 	Character* m_pCharacter;
 	Bullet* m_pBullet;
 	OrbIndicator* m_pOrbIndicator;
+	UI_element* m_pBulletUi;
 };
 

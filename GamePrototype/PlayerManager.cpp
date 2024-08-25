@@ -4,12 +4,14 @@
 #include "Bullet.h"
 #include "OrbIndicator.h"
 #include "Guard.h"
+#include "UI_element.h"
 
 PlayerManager::PlayerManager(InputManager* pInputManager, Character* pCharacter, const Rectf& viewport) :
 	m_pCharacter{ pCharacter },
 	m_pInputManager{ pInputManager },
 	m_pBullet{ nullptr },
-	m_pOrbIndicator{ new OrbIndicator{Point2f{viewport.width / 2.f - m_pCharacter->GetModelRect().width/2, viewport.height / 2.f - m_pCharacter->GetModelRect().height / 2}}}
+	m_pOrbIndicator{ new OrbIndicator{Point2f{viewport.width / 2.f - m_pCharacter->GetModelRect().width/2, viewport.height / 2.f - m_pCharacter->GetModelRect().height / 2}}},
+	m_pBulletUi{new UI_element{3.f, "UI_swap.jpg"}}
 {
 
 }
@@ -77,10 +79,12 @@ void PlayerManager::Update(const float elapsedSec, std::vector<Character*> enemi
 		};
 
 		m_pBullet = new Bullet(m_pCharacter->GetPosition(), direction.Normalized());
+		m_pBulletUi->RestartTimer();
 	}
 	m_pCharacter->Update(elapsedSec, mapVertices);
 	m_pInputManager->Update(elapsedSec);
 	m_pOrbIndicator->UpdateAngle(GetPosition());
+	m_pBulletUi->Update(elapsedSec);
 }
 
 void PlayerManager::Draw()
@@ -90,6 +94,11 @@ void PlayerManager::Draw()
 	{
 		m_pBullet->Draw();
 	}
+}
+
+void PlayerManager::DrawUI()
+{
+	m_pBulletUi->Draw();
 }
 
 void PlayerManager::DrawOrbIndicator()
